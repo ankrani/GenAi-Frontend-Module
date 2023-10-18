@@ -14,6 +14,8 @@ function Login(props) {
   const [email, setEmail] = useState('');
   const [forgotEmail, setForgotEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [otp, setOtp] = useState('');
+  const [otpModal, setotpModal] = useState(false);
   const [forgotPass, setForgotPass] = useState(false);
   const [{}, dispatch] = useStateValue();
 
@@ -69,6 +71,9 @@ function Login(props) {
       alert(err.message)
     })
   }
+  const getOtp = () => {
+    setotpModal(true);
+  }
 
   return (
     <div>
@@ -78,6 +83,7 @@ function Login(props) {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
       >        
+      
         <Modal.Body>
           <Row>
             <Col>
@@ -119,14 +125,28 @@ function Login(props) {
               value={pass}
               onChange={(e)=>setPass(e.target.value)}
                   />
+                                   
                   </>
               }
               { !forgotPass ?
               <>  
               <br/><br/>
-              <Button variant="primary" onClick={() => { submitHandler();}}>
-            Login
-          </Button>
+          <Button variant="primary" onClick={() => { getOtp();}}>
+            Get OTP
+          </Button><br/><br/>
+                  <TextField
+              id="outlined-password-input"
+              label="OTP"
+              type="text"
+              fullWidth
+              autoComplete="current-otp"
+              value={otp}
+              onChange={(e)=>setOtp(e.target.value)}
+                  /><br /><br />
+                  
+                    <Button variant="primary" disabled={!otpModal} onClick={() => { submitHandler(); }}>
+                      Login
+                    </Button> 
         <br/><br/>
         <p className="register-link" onClick={()=>setForgotPass(true)}>Forgot Password ?</p>
         <p>New to Cartiofy? <span className="register-link" onClick={() => { props.onHide(); props.openSignup();}}>Register here</span></p>
@@ -143,6 +163,7 @@ function Login(props) {
         
         </Modal.Body>
 
+          
       </Modal>
 
     </div>
