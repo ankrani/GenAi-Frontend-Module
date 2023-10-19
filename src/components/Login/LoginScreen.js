@@ -21,30 +21,6 @@ function Login(props) {
   const [forgotPass, setForgotPass] = useState(false);
   const [{}, dispatch] = useStateValue();
 
-  // var isAuthenticated = async () => {
-  //   //console.log("api called")
-  //   let authtoken = Cookies.get('Authtoken')
-  //   //console.log("authtoken>>>>>", authtoken)
-  //   await Axios.get('/api/login', {
-  //     params: {
-  //       token: authtoken
-  //     }
-  //   })
-  //     .then(res => {
-  //       //console.log(">res>",res)
-  //       dispatch({
-  //         type: "SET_USER",
-  //         user_id: res.data.user_id,
-  //       });
-  //       props.onHide();
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // }
-  
-  // useEffect(() => {
-  //   isAuthenticated();
-  // },[]);
 
   const forgotPassword = (Email) => {
     auth.sendPasswordResetEmail(Email)
