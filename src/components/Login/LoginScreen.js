@@ -8,6 +8,7 @@ import { TextField } from '@mui/material';
 import loginPage from '../../images/login-page.jpg'
 import { useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
+import Axios from '../../Axios'
 
 function Login(props) {
   const history = useHistory();
@@ -15,6 +16,7 @@ function Login(props) {
   const [forgotEmail, setForgotEmail] = useState('');
   const [pass, setPass] = useState('');
   const [otp, setOtp] = useState('');
+  const [otpFromServer, setOtpFromServer] = useState('');
   const [otpModal, setotpModal] = useState(false);
   const [forgotPass, setForgotPass] = useState(false);
   const [{}, dispatch] = useStateValue();
@@ -55,7 +57,8 @@ function Login(props) {
     }
 
   const submitHandler = async () => {
-    auth.signInWithEmailAndPassword(email, pass)
+    if (otp == otpFromServer) {
+      auth.signInWithEmailAndPassword(email, pass)
       .then(auth => {
         console.log('login successful>>', auth)
         dispatch({
@@ -70,8 +73,18 @@ function Login(props) {
         // setShow(true);
       alert(err.message)
     })
+      
+    } else {
+      alert("Invalid OTP")
+    }
+    
   }
   const getOtp = () => {
+    Axios.get(`/getuser?email=${email}`).then(res => {
+      console.log('>>otp>>>',res.data.otp)
+      setOtpFromServer(res.data.otp);
+    }).catch(err=>console.log(err))
+
     setotpModal(true);
   }
 

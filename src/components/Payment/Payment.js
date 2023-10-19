@@ -11,6 +11,7 @@ import { Button } from 'react-bootstrap';
 import CurrencyFormat from "react-currency-format";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { db } from '../../firebase'
+import Axios from '../../Axios'
 
 
 const Payment= (() => {
@@ -76,7 +77,7 @@ const Payment= (() => {
     useEffect(() => {
         // generate the special stripe secret which allows us to charge a customer
         const getClientSecret = async () => {
-            const response = await axios({
+            const response = await Axios({
                 method: 'post',
                 // Stripe expects the total in smallest unit in any currency
                 // in INR 1 = 100 paisa

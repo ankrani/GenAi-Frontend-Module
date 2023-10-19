@@ -25,10 +25,11 @@ function Signup(props) {
           if (auth) {
             Axios({
               method: 'post',
-              url: '/api/register',
+              url: '/register',
               data: {
                 email: email,
-                name:name
+                name: name,
+                password:pass1
               }
             }).then((res) => {
               console.log("user saved in database>>>",res)
